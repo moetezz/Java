@@ -201,14 +201,42 @@ public class AVLTree {
             node.height = 1 + Math.max(height(node.left), height(node.right));
         }
     }
-
+    
+    public boolean search(int key) {
+    	Node result = searchHelper(this.root,key);
+    	if(result != null)
+    		return true ;
+    	
+    	return false ;
+    }
+    
+    private Node searchHelper(Node root, int key) 
+    { 
+        //root is null or key is present at root 
+        if (root==null || root.key==key) 
+            return root; 
+      
+        // key is greater than root's key 
+        if (root.key > key) 
+            return searchHelper(root.left, key); // call the function on the node's left child
+      
+        // key is less than root's key then 
+        //call the function on the node's right child as it is greater
+        return searchHelper(root.right, key); 
+    } 
+ 
     public static void main(String[] args) {
         AVLTree tree = new AVLTree();
 
         System.out.println("Inserting values 1 to 10");
         for (int i = 1; i < 10; i++)
             tree.insert(i);
-
+        
+        System.out.println(tree.search(8));
+        System.out.println(tree.search(99));
+        System.out.println(tree.search(800));
+        System.out.println(tree.search(1));
+        
         System.out.print("Printing balance: ");
         tree.printBalance();
     }
